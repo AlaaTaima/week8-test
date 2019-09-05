@@ -1,6 +1,7 @@
 const express = require("express");
 const { join } = require("path");
 const router = require("./controllers");
+const cookiePrser = require('cookie-parser');
 
 const app = express();
 
@@ -10,6 +11,8 @@ app.use(express.static(join(__dirname, "..", "public")));
 
 app.set("port", process.env.PORT || 5000);
 
+
+app.use(cookiePrser())
 app.use(router);
 
 module.exports = app;

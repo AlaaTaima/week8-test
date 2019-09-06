@@ -1,0 +1,147 @@
+
+- A promise is an object that may produce a single value : either a resolved value, or a reason that it’s not resolved that means it represents the eventual completion or failure of an asynchronous operation, and its resulting value.
+- it has 3 possible states : 
+1- fulfilled - The action relating to the promise succeeded.
+2- rejected - The action relating to the promise failed.
+3- pending - Hasn't fulfilled or rejected yet.
+
+- The (resolve) function is used to fullfil the promise ,then you can use (then) when the promise exits successfully.(then) will binds a callback to the promise and you can use the data given to the resolve function.
+
+- The (reject) function is used to trigger an error, then you can use (catch) when the promise encounters an error.
+
+- It is useless to use resolve and reject multiple times,because Once a promise is finished, it can't restart.
+
+- Benefits of using promises : 
+
+- Promises : is a way that we use to overcome callback hell (link of multiple async functions together that make our code look messy)
+- And also promises is a way to write asynchronous code in a style closer to synchronous approach , for these reasons :
+
+1- JavaScript promises let your async call return a value like synchronous function,that value is an object that promises success or failure value.
+2- Similar to synchronous programming :
+- Output of one function is the input of the next one.
+- You can use a JS function like “JSON.parse” in the chain, their return value will be fed to the next callback.
+
+- And also there are some advantages of using promises :
+1- Better definition of control flow of asynchronous logic
+2- Reduced coupling
+3- Better error handling
+4- Improved readability
+
+****************************************************************************
+
+1- Callback :
+
+- This is the old-fashioned classical approach to asynchronous programming. You provide a function as an argument to another function that executes an asynchronous task,When the asynchronous task completes, the executing function calls your callback function.
+
+- The main disadvantage of this approach occurs when you have multiple chained asynchronous tasks,This is called callback hell.
+- with callbacks you tell the executing function what to do when the asynchronous task completes.
+- With callback : our code can look messy when we need to link multiple async functions together. 
+- Asynchronous callbacks can not use return to pass results to other code.
+
+2- Promise :
+- Promise overcome callback hell.
+- With promises the executing function returns a special object to you (the promise) and then you tell the promise what to do when the asynchronous task completes.
+- JavaScript promises let your async call return a value like synchronous function, that value is an object that promises success or failure value.
+
+Similar to synchronous programming :
+- output of one function is the input of the next one,
+- you can use a JS function like “JSON.parse” in the chain, their return value will be fed to the next callback.
+
+**********************************************************************************
+// getUser is a function that read a user data from a data.js file and use promise to return the result.
+const getUser = () => {
+
+  return new Promise((resolve, reject) => {
+
+     // read a user data from data file
+
+    fs.readFile('data.js', (err, data) => {
+
+      if (err) reject(err)
+
+      else resolve(data)
+    });
+  });
+}
+
+//now lets call it
+getUser
+  .then((data)=> console.log(data))
+  .catch((err)=> console.log(err))
+
+*******************************************************************************************
+- Promise.all is : actually a promise that takes an array of promises as an input (an iterable). Then it gets resolved when all the promises get resolved or any one of them gets rejected.
+- Why would we use it ?? 
+- it is useful when you have more than one promise and your code wants to know when all the operations that those promises represent have finished successfully.
+
+The syntax will be as follows : 
+
+Promise.all([Promise1, Promise2, Promise3])
+ .then(result) => {
+   console.log(result)
+ })
+ .catch(error => console.log(`Error in promises ${error}`))
+
+*****************************************************************************************
+
+Is a hash function that was specifically designed for hashing passwords and keep them protected from hacking.
+
+- And also a bcrypt hashing is irreversible , that means you can not obtain the original password after hashing. 
+
+- The result after hashing password will be as follows : 
+
+$ bcrypt id $ number of rounds $ random salt . (hashed password)
+
+- bcrypt has a 'per user salt' feature built into it, and the salt is added to the result string.
+- It has high secure because it executes an internal hash function many times in a loop , it based on number of rounds and also has per user salt.
+
+*************************************************************************************************
+ - to keep it protected from hacking and we can keep it in the (.gitignore file) , so it will not be uploaded to any platform and only the developer know it.
+ - and it is used with signing JWT and the data that stored in it is encoded not encrypted so it can easily be converted back to plain text by using the secret key.
+ - So if the attacker know it he will be able to hack data. 
+ - It is used for signing process : 
+ ( signing ) :  the message must be sent alongside the HMAC hash. Parties with the secret key will hash the message again themselves, and if it is authentic, the    received and computed hashes will match to verify that the message/cookie/whatever has not been tampered with
+
+********************************************************************************************************
+JWT : JSON Web Tokens is used to verify that the cookies or data has not been tampered or changed .
+ - The reason why JWT are used is to prove that the sent data was actually created by an authentic source and the data inside a JWT is encoded and signed.
+ - the jwt is signed means that : the hashed data is stored alongside the original message to verify that the message/cookie/whatever has not been tampered with. 
+ - the data inside a JWT is encoded and signed, not encrypted so it can easily be converted back to plain text, So do not store sensitive user information in a JWT.
+ - So, the main purpose of using JWT is to prove that the sent data was actually created by an authentic source.
+ -- a JWT is just a string with the following format:
+  header.payload.signature
+
+1- Header - base64 encoded object about the type of token (jwt) and the type of hashing algorithm.
+2- Payload - base64 encoded object with your data you want to store in your JWT.
+3- Signature - a hash of parts header and payload joined by a full stop.
+
+**********************************************************************************
+ -- Cookie : is a piece of data that your server, hosted on a certain domain sends back to the browser, which the browser will then keep, and attach to every future request to that domain.
+-- It used for : 
+1- to save site login information for the user ,so it keep the use logged in unless he logged out. (keep track of the user’s actions.)
+2- Cookies are useful as they allow us to store information about a client.
+- And as the client keeps hold of the cookie the server can simply check the cookies has the correct information. 
+And also it is used for : 
+1- Session management
+2- Personalization(Recommendation systems)
+
+****************************************************************************************
+- bcrypt : is a password hash.
+
+1- It is designed to be very slow, slower than crypto , that because it executes an internal encryption/hash function many times in a loop.so that attackers will have to spend more resources to find the input by brute forcing or dictionary attacks.
+2- The bcrypt module contains an implementation of the bcrypt password hashing algorithm and nothing else.
+3- Use bcrypt where you want to do slow and computationally expensive hashing -- this will generally be for hashes where you really don't want an attacker to be able to reverse the hash for example for user passwords.
+
+- crypto : is a cryptographic hash.
+
+1- has been designed to be fast and it is faster than bcrypt.
+2- The built-in crypto module contains many cryptographic primitives such as hashing, symmetric and asymmetric encryption, key exchange and some more. It doesn't contain an implementation of bcrypt, but there is an implementation of PBKDF2 which has a similar goal (password hashing) but not as good as bcrypt.
+****************************************************************************
+-  stateful (session) : 
+1- a session is created in a database, and the session id is sent to the browser. Then the browser sends the id with each request, and the server checks in the database to validate the session.
+2- A session ends when the user closes the browser or after leaving the site, the server will terminate the session after a predetermined period of time, commonly 30 minutes duration.
+
+- stateless (token) : 
+1- No data persists on the server in relation to individual tokens.
+2- Server script sends a set of tokens (protected cookies) to the browser. Then the browser stores this information and attach it with every future request to the server, and server uses that information to identify the user.
+

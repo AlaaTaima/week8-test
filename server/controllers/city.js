@@ -8,6 +8,6 @@ exports.getAllCities = getAllCities;
 exports.add = (req, res, next) => {
   const cityInfo = req.body;
   addCity(cityInfo)
-    .then(r => res.redirect("/cities"))
+    .then(() => res.redirect("/cities"))
     .catch(err => next(err));
 };
